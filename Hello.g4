@@ -162,6 +162,7 @@ cmdRead   : 'leia' AP ID {
 				if (id == null){
 					throw new RuntimeException("Undeclared Variable");
 				}
+				mapaVarsInicializadas.put(id.getText(), true);
 				CmdRead _read = new CmdRead(id);
 				stack.peek().add(_read);
 			 }
