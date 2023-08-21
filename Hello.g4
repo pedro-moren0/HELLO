@@ -33,6 +33,7 @@ grammar Hello;
 	private Program  program = new Program();
 	private Stack<List<AbstractCommand>> stack = new Stack<List<AbstractCommand>>();
 	private Map<String, Boolean> mapaUsoVariaveis = new HashMap<>();
+	private Map<String, Boolean> mapaVarsInicializadas = new HashMap<>();
 	
 	public void init(){
 		program.setSymbolTable(symbolTable);
@@ -77,6 +78,7 @@ lista_var : ID {
 	          	throw new RuntimeException("Variable " + idDeclarado + " already has been declared");
 	          }
 	          mapaUsoVariaveis.put(idDeclarado,false);
+	          mapaVarsInicializadas.put(idDeclarado, false);
 	          symbolTable.add(idDeclarado, new Identifier(idDeclarado, currentType));
 	          declaredIds.add(symbolTable.get(idDeclarado));
             } 
@@ -87,6 +89,7 @@ lista_var : ID {
 	          	throw new RuntimeException("Variable \"" + idDeclarado + "\" already has been declared");
 	          }
 	          mapaUsoVariaveis.put(idDeclarado,false);
+	          mapaVarsInicializadas.put(idDeclarado, false);
 	          symbolTable.add(idDeclarado, new Identifier(idDeclarado, currentType));
 	          declaredIds.add(symbolTable.get(idDeclarado));
            	}
@@ -188,6 +191,7 @@ cmdAttr   : ID {
 				if (!symbolTable.exists(_input.LT(-1).getText())){
 					throw new RuntimeException("Semantic ERROR - Undeclared Identifier");
 				}
+				mapaVarsInicializadas.put(idAtribuido, true);
 				leftDT = symbolTable.get(_input.LT(-1).getText()).getType();
 				rightDT = null;
 			}
@@ -235,12 +239,12 @@ termo     : NUMBER
 				
 				// checks for initialization; if initialized generate new NumberExpression, throws otherwise
 				Identifier id = symbolTable.get(_input.LT(-1).getText());
-				if (id != null){
+				if (mapaVarsInicializadas.get(id.getText())){ //nome - v se inicializado, false caso contrario
 					mapaUsoVariaveis.put(id.getText(),true);
 					expression = new IDExpression(id);
 				}
 				else{
-					throw new RuntimeException("Semantic ERROR - Unassigned variable");
+					throw new RuntimeException("Semantic ERROR - Unassigned variable: " + id.getText());
 				}
 			}
 		  | AP expr FP {
