@@ -1,0 +1,44 @@
+programa
+	INTEGER a,x,y,z,w.
+	REAL b.
+	escreva("Insira um valor inteiro que sera atribuido para a: ").
+	leia(a).
+	escreva("Insira um valor real que sera atribuido para b: ").
+	leia(b).
+	escreva("O valor inteito de a é: ").
+	escreva(a).
+	escreva("O valor real de b é: ").
+	escreva(b).
+	escreva("Escreva dois valores inteiros para serem atribuidos para as variaveis x e y respectivamente: ").
+	leia(x).
+	leia(y).
+	
+	
+	se (x == y) entao
+	  escreva("Caso do if funcionando").
+	senao
+	  escreva("Caso do else nao funcionando").
+	fimse.
+	
+	se (x != y) entao
+	  escreva("Caso do if nao funcionando").
+	senao
+	  escreva("Caso do else  funcionando").
+	fimse.
+	
+	
+	escreva("Insira o valor de partida do while: ").
+	leia(z).
+	escreva("Insira o valor de parada do while: ").
+	leia(w).
+	
+	enquanto (z < w) realize 
+	escreva("Mostrando o funcionamento do while").
+	z := z +1.
+	fimenquanto.
+	
+	escreva("executando a expressao com parenteses z = z*(w+1)").
+	z := z*(w+1).
+	escreva("resultado abaixo").
+	escreva(z).
+fimprog.
